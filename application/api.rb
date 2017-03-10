@@ -32,6 +32,18 @@ require 'lib/io'
 require 'active_support'
 require 'active_support/core_ext'
 
+# load background job
+require 'resque'
+require 'jobs/mailer'
+
+# validations
+require 'api_helpers/validates_confirmation'
+
+# authentication
+require 'jwt'
+
+require 'models/user'
+
 # require all models
 Dir['./application/models/*.rb'].each { |rb| require rb }
 
@@ -40,7 +52,7 @@ class Api < Grape::API
   version 'v1.0', using: :path
   content_type :json, 'application/json'
   default_format :json
-  prefix :api
+  prefix :api  
   rescue_from Grape::Exceptions::ValidationErrors do |e|
     ret = { error_type: 'validation', errors: {} }
     e.each do |x, err|
@@ -62,5 +74,13 @@ class Api < Grape::API
   Dir['./application/api/**/*.rb'].each { |rb| require rb }
 
   add_swagger_documentation \
-    mount_path: '/docs'
+    mount_path: '/docs',
+    info: {
+      title: "Ruby API Example",
+      description: "This API needs to run 'bundle exec rake resque:work QUEUE=mailing' for emails. Most of the requests need authentication",
+      contact_name: "Maria Jose Montero",
+      contact_email: "mjmontero@gmail.com",
+      version: "1.0",
+    }
+
 end

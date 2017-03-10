@@ -106,3 +106,6 @@ Our goal in development is to keep the main repository clean. To achieve this, w
 8. Optionally merge or checkout another developer's branch
     - `git checkout DEVELOPER_USERNAME/BRANCH_NAME`
     - `git merge DEVELOPER_USERNAME/BRANCH_NAME`
+
+
+

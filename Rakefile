@@ -2,7 +2,7 @@ $:.unshift(File.expand_path("./application"))
 current_task = Rake.application.top_level_tasks.first
 
 ENV['RACK_ENV'] ||= current_task['spec'] ? 'test' : 'development'
-
+require 'resque/tasks'
 require 'bundler'
 require 'bundler/setup'
 
